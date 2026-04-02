@@ -1,0 +1,50 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: podpulse-agent
+  namespace: {{ .Values.namespace }}
+  labels:
+    {{- include "podpulse-agent.labels" . | nindent 4 }}
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app.kubernetes.io/name: {{ include "podpulse-agent.name" . }}
+  template:
+    metadata:
+      labels:
+        {{- include "podpulse-agent.labels" . | nindent 8 }}
+      annotations:
+        checksum/secret: {{ include (print $.Template.BasePath "/secret.yaml") . | sha256sum }}  
+    spec:
+      serviceAccountName: {{ .Values.serviceAccount.name }}
+      securityContext:
+        runAsNonRoot: {{ .Values.agent.securityContext.runAsNonRoot }}
+        runAsUser: {{ .Values.agent.securityContext.runAsUser }}
+        runAsGroup: {{ .Values.agent.securityContext.runAsGroup }}
+      containers:
+        - name: agent
+          image: "{{ .Values.agent.image.repository }}:{{ .Values.agent.image.tag }}"
+          imagePullPolicy: {{ .Values.agent.image.pullPolicy }}
+          args:
+            - --backend-addr=$(PODPULSE_BACKEND_ADDR)
+            - --api-key=$(PODPULSE_API_KEY)
+          env:
+            - name: PODPULSE_BACKEND_ADDR
+              valueFrom:
+                secretKeyRef:
+                  name: podpulse-agent-credentials
+                  key: PODPULSE_BACKEND_ADDR
+            - name: PODPULSE_API_KEY
+              valueFrom:
+                secretKeyRef:
+                  name: podpulse-agent-credentials
+                  key: PODPULSE_API_KEY
+          resources:
+            {{- toYaml .Values.agent.resources | nindent 12 }}
+          securityContext:
+            readOnlyRootFilesystem: {{ .Values.agent.securityContext.readOnlyRootFilesystem }}
+            allowPrivilegeEscalation: {{ .Values.agent.securityContext.allowPrivilegeEscalation }}
+            capabilities:
+              drop:
+                {{- toYaml .Values.agent.securityContext.capabilities.drop | nindent 16 }}

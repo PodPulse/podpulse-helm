@@ -1,0 +1,19 @@
+apiVersion: v2
+name: podpulse-agent
+description: AI-powered Kubernetes incident diagnostics agent
+type: application
+version: 0.1.0
+appVersion: "v0.1.0"
+icon: https://raw.githubusercontent.com/PodPulse/podpulse-agent/main/docs/logo.png
+keywords:
+  - kubernetes
+  - observability
+  - ai
+  - sre
+home: https://github.com/PodPulse/podpulse-agent
+sources:
+  - https://github.com/PodPulse/podpulse-agent
+maintainers:
+  - name: Riad
+    url: https://github.com/riadus
+  

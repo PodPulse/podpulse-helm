@@ -1,0 +1,37 @@
+# PodPulse Agent — default values
+# Override these values in your own values file or via --set
+
+agent:
+  image:
+    repository: ghcr.io/podpulse/podpulse-agent
+    tag: "v0.1.0"
+    pullPolicy: IfNotPresent
+
+  # Required — provided by PodPulse after GitHub App installation
+  backend:
+    address: ""   # e.g. api.podpulse.io:443
+    apiKey: ""    # pk_live_... — never commit this value
+
+  resources:
+    limits:
+      memory: "64Mi"
+      cpu: "100m"
+    requests:
+      memory: "32Mi"
+      cpu: "50m"
+
+  # Pod-level security context
+  securityContext:
+    runAsNonRoot: true
+    runAsUser: 65532
+    runAsGroup: 65532
+    readOnlyRootFilesystem: true
+    allowPrivilegeEscalation: false
+    capabilities:
+      drop:
+        - ALL
+
+serviceAccount:
+  name: podpulse-agent
+
+namespace: podpulse
