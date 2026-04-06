@@ -1,0 +1,55 @@
+name: Release Helm Chart
+
+on:
+  push:
+    tags:
+      - "v*"
+
+jobs:
+  release:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Configure Git
+        run: |
+          git config user.name "github-actions"
+          git config user.email "github-actions@github.com"
+
+      - name: Install Helm
+        uses: azure/setup-helm@v3
+
+      - name: Extract version from tag
+        id: tag
+        run: echo "version=${GITHUB_REF#refs/tags/v}" >> $GITHUB_OUTPUT
+
+      - name: Update Chart version
+        run: |
+          sed -i "s/^version:.*/version: ${{ steps.tag.outputs.version }}/" Chart.yaml
+          sed -i "s/^appVersion:.*/appVersion: v${{ steps.tag.outputs.version }}/" Chart.yaml
+
+      - name: Package chart
+        run: helm package .
+
+      - name: Checkout gh-pages
+        uses: actions/checkout@v4
+        with:
+          ref: gh-pages
+          path: gh-pages
+
+      - name: Update Helm repo index
+        run: |
+          mv podpulse-agent-*.tgz gh-pages/
+          helm repo index gh-pages/ --url https://podpulse.github.io/podpulse-helm
+
+      - name: Push to gh-pages
+        run: |
+          cd gh-pages
+          git add .
+          git commit -m "release: chart v${{ steps.tag.outputs.version }}"
+          git push
