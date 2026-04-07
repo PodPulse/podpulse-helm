@@ -3,7 +3,7 @@ entries:
   podpulse-agent:
   - apiVersion: v2
     appVersion: v0.1.2
-    created: "2026-04-06T21:06:02.932672709Z"
+    created: "2026-04-07T09:48:57.665415901Z"
     description: AI-powered Kubernetes incident diagnostics agent
     digest: 315893489be8fc6887a19ac2e7e3b20a0bd776ace19471ee727542a9faf89f55
     home: https://github.com/PodPulse/podpulse-agent
@@ -25,7 +25,7 @@ entries:
     version: 0.1.2
   - apiVersion: v2
     appVersion: v0.1.0
-    created: "2026-04-06T21:06:02.931225916Z"
+    created: "2026-04-07T09:48:57.663900045Z"
     description: AI-powered Kubernetes incident diagnostics agent
     digest: 57ffdc93cb7280580fabe2153f0afbdb77af6407895d19f5a40cea8346aba961
     home: https://github.com/PodPulse/podpulse-agent
@@ -45,4 +45,26 @@ entries:
     urls:
     - https://podpulse.github.io/podpulse-helm/podpulse-agent-0.1.0.tgz
     version: 0.1.0
-generated: "2026-04-06T21:06:02.930169503Z"
+  - apiVersion: v2
+    appVersion: v0.0.4
+    created: "2026-04-07T09:48:57.663045903Z"
+    description: AI-powered Kubernetes incident diagnostics agent
+    digest: 3d3199042fb7b0f5fdff16c301041707d411297252190fb6393d07246d7c658b
+    home: https://github.com/PodPulse/podpulse-agent
+    icon: https://raw.githubusercontent.com/PodPulse/podpulse-agent/main/docs/logo.png
+    keywords:
+    - kubernetes
+    - observability
+    - ai
+    - sre
+    maintainers:
+    - name: Riad
+      url: https://github.com/riadus
+    name: podpulse-agent
+    sources:
+    - https://github.com/PodPulse/podpulse-agent
+    type: application
+    urls:
+    - https://podpulse.github.io/podpulse-helm/podpulse-agent-0.0.4.tgz
+    version: 0.0.4
+generated: "2026-04-07T09:48:57.660950047Z"
