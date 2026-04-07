@@ -5,7 +5,7 @@ agent:
   image:
     repository: ghcr.io/podpulse/podpulse-agent
     tag: "latest"
-    pullPolicy: IfNotPresent
+    pullPolicy: Always
 
   # Required — provided by PodPulse after GitHub App installation
   backend:
