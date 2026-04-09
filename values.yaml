@@ -9,7 +9,7 @@ agent:
 
   # Required — provided by PodPulse after GitHub App installation
   backend:
-    address: ""   # e.g. api.podpulse.io:443
+    address: "api.podpulse.io:5051"
     apiKey: ""    # pk_live_... — never commit this value
 
   resources:
